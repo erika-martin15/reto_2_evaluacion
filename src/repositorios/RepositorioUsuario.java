@@ -3,118 +3,133 @@ package repositorios;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import View.AdminMenu;
+import View.OficinaMenu;
 import auxiliar.Input;
 import conectores.Conector;
+import modelos.Aula;
+import modelos.Ordenadores;
+import modelos.Reuniones;
+import modelos.Sala;
 import modelos.Usuario;
 
 public class RepositorioUsuario {
 	
-	
-	public static void instanciarUsuario() {
+	public static void registrarUsuario(Usuario usuario) throws SQLException {
 		
-		String DNI = Input.getDNI();
-		String rol = "CLIENTE";
-		String nombre = Input.getNombre();
-		String apellido = Input.getApellido();
-		String email = Input.getEmail();
-		int telefono = Input.getTelefono();
-		String password = Input.getPassword();
+		// CONSULTA PARA INSERTAR EL USUARIO
+		String query = "INSERT INTO Usuario (DNI, Nombre, Apellido, Sexo, Telefono, Contra, Email, Rol) VALUES (?, ?, ?, ?, ?, ?, ?, 'CLIENTE')";
 		
-		Usuario usuario = new Usuario();
-		
-		usuario.setDNI(DNI);
-		usuario.setRol(rol);
-		usuario.setNombre(nombre);
-		usuario.setApellido(apellido);
-		usuario.setEmail(email);
-		usuario.setTelefono(telefono);
-		usuario.setPassword(password);
-	}
-	
-	public static void registrarUsuario(String DNI, String nombre, String apellido, String email, int telefono, String password) throws SQLException {
-		
-		
-		boolean exist = false;
-		
-		String query = "INSERT INTO Usuarios (DNI, nombre, apellido, email, telefono, password) VALUES (?, ?, ?, ?, ?, ?)";
-		
-		String queryCheck = "SELECT DNI, password FROM Usuario WHERE DNI = ? AND password = ?";
+		// CONSULTA PARA COMPROBAR SI EL USUARIO YA EXISTE
+		String queryCheck = "SELECT DNI FROM Usuario WHERE DNI = ? ";
 		
 		try (PreparedStatement checkStmt = Conector.getConexion().prepareStatement(queryCheck)) {
 			
-			checkStmt.setString(1, DNI);
-			checkStmt.setString(2, password);
+			checkStmt.setString(1, usuario.getDNI());
 			
 			ResultSet resultSet = checkStmt.executeQuery();
-			resultSet.next();
-			int count = resultSet.getInt(1);
 			
-			if (count > 0) {
-				exist = true;
-				System.out.println("ERROR: Usuario ya existente");
+			if (resultSet.next()) {
+				
+		        int count = resultSet.getRow();
+		        
+		     // SI DEVUELVE UN RESULTADO, EXISTE UN USUARIO    
+		        if (count > 0) {
+		        	
+		        	System.out.println("""
+							\033[91m┌──────────────────────────┐
+							│ [!] \033[97mUSUARIO YA EXISTENTE \033[91m│
+							└──────────────────────────┘\033[97m""");
+		        }
+			}
+			// INSERTA EL USUARIO
+			else {
+				try (PreparedStatement preparedStatement = Conector.getConexion().prepareStatement(query)) {
+			        preparedStatement.setString(1, usuario.getDNI());
+			        preparedStatement.setString(2, usuario.getNombre());
+			        preparedStatement.setString(3, usuario.getApellido());
+			        preparedStatement.setString(4, usuario.getSexo());
+			        preparedStatement.setInt(5, usuario.getTelefono());
+			        preparedStatement.setString(6, usuario.getContra());
+			        preparedStatement.setString(7, usuario.getEmail());
+			        preparedStatement.executeUpdate();
+			        System.out.println("\033[32m[✓] \033[97mUSUARIO INTRODUCIDO");
+			    }
+				catch(SQLException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	
+	public static void loginUser(Usuario usuario) throws SQLException {
 		
-		if (!exist) {
-			try (PreparedStatement preparedStatement = Conector.getConexion().prepareStatement(query)) {
-		        preparedStatement.setString(1, DNI);
-		        preparedStatement.setString(2, nombre);
-		        preparedStatement.setString(3, apellido);
-		        preparedStatement.setString(4, email);
-		        preparedStatement.setInt(5, telefono);
-		        preparedStatement.setString(6, password);
-		        preparedStatement.executeUpdate();
-		    }
+		boolean exist = false;
+		
+		String checkPassword = "SELECT DNI, Contra, Rol FROM Usuario WHERE DNI = ? AND Contra = ?";
+		
+		String checkDNI = "SELECT DNI FROM Usuario WHERE DNI = ?";
+		
+		try (PreparedStatement checkStmt = Conector.getConexion().prepareStatement(checkDNI) ) {
+			
+			checkStmt.setString(1, usuario.getDNI());
+			
+			ResultSet resultSet = checkStmt.executeQuery();
+			
+			if (resultSet.next()) {
+				
+		        System.out.println("\033[32m[✓] \033[97mUSUARIO EXISTE");
+		        
+		        exist = true;
+				} else {
+		        	System.out.println("\033[91m[X] \033[97mUSUARIO NO EXISTE\n");
+		        }
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-	}
-	
-	public static void loginUser(String DNI, String password) {
 		
+		if (exist) {
+			
+			try (PreparedStatement checkStmt = Conector.getConexion().prepareStatement(checkPassword)) {
+				
+				checkStmt.setString(1, usuario.getDNI());
+				checkStmt.setString(2, usuario.getContra());
+				
+				ResultSet resultSet = checkStmt.executeQuery();
+				
+				if (resultSet.next()) {
+					
+					int count = resultSet.getRow();
+					
+					if (count > 0) {
+						
+						String rol = resultSet.getString("Rol");
+						
+						if (rol.equalsIgnoreCase("CLIENTE")) {
+							System.out.println("\033[32m[✓] \033[97mUSUARIO LOGGEADO\n");
+							OficinaMenu.oficinaMenu();
+						}
+						else if (rol.equalsIgnoreCase("ADMIN")) {
+							System.out.println("\033[32m[✓] \033[95mADMIN [⚡] \033[97mLOGGEADO\n");
+							AdminMenu.adminMenu();
+						}		
+					}	
+				}
+				else {
+					System.out.println("""
+							\033[91m┌───────────────────────────┐
+							│ [X] \033[97mCONTRASEÑA INCORRECTA \033[91m│
+							└───────────────────────────┘\033[97m""");
+				}	
+			}
+		}	
+		exist = false;
 	}
-	
-	
-	
-	
-	
-	
-	/*
-	public static void insertarUsuario(String DNI, String nombre, String apellido, String email, int telefono, String password) throws SQLException {
-	    String query = "INSERT INTO Peliculas (titulo, director, anio_lanzamiento, genero, duracion) VALUES (?, ?, ?, ?, ?)";
-
-	    // Comprobar si la película ya existe
-	        String queryCheck = "SELECT DNI, password FROM Usuario WHERE DNI = ? AND password = ?";
-	    try (PreparedStatement checkStmt = Conector.getConexion().prepareStatement(queryCheck)) {
-
-	      checkStmt.setString(1, DNI);
-	      checkStmt.setString(2, password);
-	    
-	        ResultSet resultSet = checkStmt.executeQuery();
-	        resultSet.next();
-	        int count = resultSet.getInt(1);
-	    
-	        if (count > 0) {
-	            System.out.println("La película \"" + titulo + "\" ya existe en la base de datos y no se insertará nuevamente.");
-	            return; // Al devolver un return no se ejecutará el código restante y lo retoma desde el método que lo llamó
-	        }
-
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-
-
-
-	    try (PreparedStatement preparedStatement = Conector.getConexion().prepareStatement(query)) {
-	        preparedStatement.setString(1, titulo);
-	        preparedStatement.setString(2, director);
-	        preparedStatement.setInt(3, anioLanzamiento);
-	        preparedStatement.setString(4, genero);
-	        preparedStatement.setInt(5, duracion);
-	        preparedStatement.executeUpdate();
-	    }
-	}*/
-	
 }

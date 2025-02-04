@@ -1,7 +1,5 @@
 package modelos;
 
-import java.util.Objects;
-
 public class Usuario {
 	
 	// ATRIBUTOS
@@ -9,26 +7,28 @@ public class Usuario {
 	private String rol;
 	private String nombre;
 	private String apellido;
+	private String sexo;
 	private String email;
 	private int telefono;
-	private String password;
+	private String contra;
 	
-	public final String permiso_debil = "CLIENTE";
-	public final String permiso_fuerte = "ADMIN";
-	public final String permiso_rey = "REY_ADMIN";
+	public static final String permiso_debil = "CLIENTE";
+	public static final String permiso_fuerte = "ADMIN";
+	public static final String permiso_rey = "REY_ADMIN";
 	
 	// CONSTRUCTOR
 	public Usuario() {
 	}
 	
-	public Usuario(String DNI, String rol, String nombre, String apellido, String email, int telefono, String password) {
+	public Usuario(String DNI, String rol, String nombre, String apellido, String sexo, String email, int telefono, String password) {
 		this.DNI = DNI;
-		this.rol = permiso_debil;
+		this.rol = rol;
 		this.nombre = nombre;
 		this.apellido = apellido;
+		this.sexo = sexo;
 		this.email = email;
 		this.telefono = telefono;
-		this.password = password;
+		this.contra = password;
 	}
 	
 	// GETTERS Y SETTERS
@@ -56,6 +56,12 @@ public class Usuario {
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
+	public String getSexo() {
+		return sexo;
+	}
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
 	public String getEmail() {
 		return email;
 	}
@@ -68,34 +74,17 @@ public class Usuario {
 	public void setTelefono(int telefono) {
 		this.telefono = telefono;
 	}
-	public String getPassword() {
-		return password;
+	public String getContra() {
+		return contra;
 	}
 	public void setPassword(String password) {
-		this.password = password;
+		this.contra = password;
 	}
 	
 	// METODOS
 	@Override
 	public String toString() {
-		return "DNI = " + DNI + ", Rol = " + rol + ", Nombre = " + nombre + ", Apellido = " + apellido + ", Email = "
-				+ email + ", Telefono = " + telefono + ", Password = " + password;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Usuario other = (Usuario) obj;
-		return Objects.equals(DNI, other.DNI) && Objects.equals(apellido, other.apellido)
-				&& Objects.equals(email, other.email) && Objects.equals(nombre, other.nombre)
-				&& Objects.equals(password, other.password) && Objects.equals(permiso_debil, other.permiso_debil)
-				&& Objects.equals(permiso_fuerte, other.permiso_fuerte)
-				&& Objects.equals(permiso_rey, other.permiso_rey) && Objects.equals(rol, other.rol)
-				&& telefono == other.telefono;
+		return "DNI = " + DNI + ", Rol = " + rol + ", Nombre = " + nombre + ", Apellido = " + apellido + ", Sexo = "
+				+ sexo + ", Email = " + email + ", Telefono = " + telefono + ", Contraseña = " + contra;
 	}
 }

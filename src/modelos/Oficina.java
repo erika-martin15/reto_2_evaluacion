@@ -7,6 +7,7 @@ public class Oficina {
 	// ATRIBUTOS
 	private int ID;
 	private String ciudad;
+	private String nombre;
 	private String direccion;
 	private ArrayList<Sala> salas;
 	
@@ -14,9 +15,10 @@ public class Oficina {
 	public Oficina() {
 	}
 	
-	public Oficina(int ID, String ciudad, String direccion) {
+	public Oficina(int ID, String ciudad, String nombre, String direccion) {
 		this.ID = ID;
 		this.ciudad = ciudad;
+		this.nombre = nombre;
 		this.direccion = direccion;
 	}
 	
@@ -33,6 +35,12 @@ public class Oficina {
 	public void setCiudad(String ciudad) {
 		this.ciudad = ciudad;
 	}
+	public String getnombre() {
+		return nombre;
+	}
+	public void setnombre(String nombre) {
+		this.nombre = nombre;
+	}
 	public String getDireccion() {
 		return direccion;
 	}
@@ -45,6 +53,6 @@ public class Oficina {
 	
 	@Override
 	public String toString() {
-		return "ID = " + ID + ", Ciudad = " + ciudad + ", Direccion = " + direccion;
+		return "OFICINA " + ID + ", Ciudad = " + ciudad + ", nombre = " + nombre + ", Direccion = " + direccion;
 	}
 }

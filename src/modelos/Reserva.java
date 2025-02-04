@@ -4,9 +4,9 @@ public class Reserva {
 	
 	// ATRIBUTOS
 	private int ID;
-	private int fecha_inicio;
-	private int fecha_fin;
-	private float precio;
+	private String fecha_inicio;
+	private String fecha_fin;
+	private float precioTotal;
 	private String DNI_usuario;
 	private int ID_sala;
 	
@@ -14,11 +14,11 @@ public class Reserva {
 	public Reserva() {
 	}
 	
-	public Reserva(int ID, int fecha_inicio, int fecha_fin, float precio, String DNI_usuario, int ID_sala) {
+	public Reserva(int ID, String fecha_inicio, String fecha_fin, float precio, String DNI_usuario, int ID_sala) {
 		this.ID = ID;
 		this.fecha_inicio = fecha_inicio;
 		this.fecha_fin = fecha_fin;
-		this.precio = precio;
+		this.precioTotal = precio;
 		this.DNI_usuario = DNI_usuario;
 		this.ID_sala = ID_sala;
 	}
@@ -30,23 +30,23 @@ public class Reserva {
 	public void setID(int iD) {
 		ID = iD;
 	}
-	public int getFecha_inicio() {
+	public String getFecha_inicio() {
 		return fecha_inicio;
 	}
-	public void setFecha_inicio(int fecha_inicio) {
+	public void setFecha_inicio(String fecha_inicio) {
 		this.fecha_inicio = fecha_inicio;
 	}
-	public int getFecha_fin() {
+	public String getFecha_fin() {
 		return fecha_fin;
 	}
-	public void setFecha_fin(int fecha_fin) {
+	public void setFecha_fin(String fecha_fin) {
 		this.fecha_fin = fecha_fin;
 	}
 	public float getPrecio() {
-		return precio;
+		return precioTotal;
 	}
 	public void setPrecio(float precio) {
-		this.precio = precio;
+		this.precioTotal = precio;
 	}
 	public String getDNI_usuario() {
 		return DNI_usuario;
@@ -64,7 +64,7 @@ public class Reserva {
 	// METODOS
 	@Override
 	public String toString() {
-		return "ID = " + ID + ", Fecha Inicio =" + fecha_inicio + ", Fecha Fin =" + fecha_fin + ", Precio ="
-				+ precio + ", DNI Usuario =" + DNI_usuario + ", ID Sala = " + ID_sala;
+		return "ID = " + ID + ", Fecha Inicio =" + fecha_inicio + ", Fecha Fin =" + fecha_fin + ", Precio Total ="
+				+ precioTotal + ", DNI Usuario =" + DNI_usuario + ", ID Sala = " + ID_sala;
 	}
 }

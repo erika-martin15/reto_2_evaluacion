@@ -9,8 +9,8 @@ public class Ordenadores extends Sala {
 	public Ordenadores() {
 	}
 	
-	public Ordenadores(int ID, String nombre, int capacidad, String tipo, String direccion, Oficina oficina, int PCs) {
-		super(ID, nombre, capacidad, tipo, direccion, oficina);
+	public Ordenadores(int ID, String nombre, int capacidad, String tipo, String direccion, float precioHora, int oficina, int PCs) {
+		super(ID, nombre, capacidad, tipo, direccion, precioHora, oficina);
 		this.PCs = PCs;
 	}
 	

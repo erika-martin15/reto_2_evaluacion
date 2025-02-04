@@ -9,8 +9,8 @@ public class Aula extends Sala{
 	public Aula() {
 	}
 	
-	public Aula(int ID, String nombre, int capacidad, String tipo, String direccion, Oficina oficina, int pupitres) {
-		super(ID, nombre, capacidad, tipo, direccion, oficina);
+	public Aula(int ID, String nombre, int capacidad, String tipo, String direccion, float precioHora, int oficina, int pupitres) {
+		super(ID, nombre, capacidad, tipo, direccion, precioHora, oficina);
 		this.pupitres = pupitres;
 	}
 	

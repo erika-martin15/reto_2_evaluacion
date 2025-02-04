@@ -8,19 +8,21 @@ public class Sala {
 	protected int capacidad;
 	protected String tipo;
 	protected String direccion;
-	protected Oficina oficina;
+	protected float precioHora;
+	protected int ID_oficina;
 	
 	// CONSTRUCTOR
 	public Sala() {
 	}
 	
-	public Sala(int ID, String nombre, int capacidad, String tipo, String direccion, Oficina oficina) {
+	public Sala(int ID, String nombre, int capacidad, String tipo, String direccion, float precio, int ID_oficina) {
 		this.ID = ID;
 		this.nombre = nombre;
 		this.capacidad = capacidad;
 		this.tipo = tipo;
 		this.direccion = direccion;
-		this.oficina = oficina;
+		this.precioHora = precio;
+		this.ID_oficina = ID_oficina;
 	}
 	
 	// GETTERS Y SETTERS
@@ -54,17 +56,22 @@ public class Sala {
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
-	public Oficina getOficina() {
-		return this.oficina;
+	public float getPrecio() {
+		return precioHora;
 	}
-	public void setOficina(Oficina oficina) {
-		this.oficina = oficina;
+	public void setPrecio(float precio) {
+		this.precioHora = precio;
+	}
+	public int getOficina() {
+		return this.ID_oficina;
+	}
+	public void setOficina(int ID_oficina) {
+		this.ID_oficina = ID_oficina;
 	}
 	
 	// METODOS
 	@Override
 	public String toString() {
-		return "ID = " + ID + ", Nombre = " + nombre + ", Capacidad = " + capacidad + ", Tipo ="  + tipo + ", Direccion = "
-				+ direccion + ", Oficina = " + oficina;
+		return "Nombre = " + nombre + ", Capacidad = " + capacidad + ", Direccion = "  + direccion + ", Precio Hora = " + precioHora + ", Tipo = " + tipo;
 	}
 }
