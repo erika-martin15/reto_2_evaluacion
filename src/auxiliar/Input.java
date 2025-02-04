@@ -191,21 +191,33 @@ public class Input {
 	}
 	
 	public static void showHoras() {
-		System.out.println("""
-				\033[96m┌─────────────┐
-				│    \033[97mHORAS    \033[96m│
-				│             │
-				│  \033[96m[\033[97m1\033[96m] \033[97m14:00  \033[96m│
-				│  \033[96m[\033[97m2\033[96m] \033[97m15:00  \033[96m│
-				│  \033[96m[\033[97m3\033[96m] \033[97m16:00  \033[96m│
-				│  \033[96m[\033[97m4\033[96m] \033[97m17:00  \033[96m│
-				│  \033[96m[\033[97m5\033[96m] \033[97m18:00  \033[96m│
-				│  \033[96m[\033[97m6\033[96m] \033[97m19:00  \033[96m│
-				│  \033[96m[\033[97m7\033[96m] \033[97m20:00  \033[96m│
-				│  \033[96m[\033[97m8\033[96m] \033[97m21:00  \033[96m│
-				│             │
-				│  \033[96m[\033[97m9\033[96m] \033[97mATRÁS  \033[96m│
-				└─────────────┘\033[97m""");
+		
+		final String DISPONIBLE = "\033[97m";
+		final String OCUPADO = "\033[31m";
+		
+		String disponible14 = DISPONIBLE;
+		String disponible15 = DISPONIBLE;
+		String disponible16 = DISPONIBLE;
+		String disponible17 = DISPONIBLE;
+		String disponible18 = DISPONIBLE;
+		String disponible19 = DISPONIBLE;
+		String disponible20 = DISPONIBLE;
+		String disponible21 = DISPONIBLE;
+				
+		System.out.println("\033[96m┌─────────────┐");
+		System.out.println("│    \033[97mHORAS    \033[96m│");
+		System.out.println("│             │");
+		System.out.println("│  \033[96m[\033[97m1\033[96m] " + disponible14 + "14:00  \033[96m│");
+		System.out.println("│  \033[96m[\033[97m2\033[96m] " + disponible15 + "15:00  \033[96m│");
+		System.out.println("│  \033[96m[\033[97m3\033[96m] " + disponible16 + "16:00  \033[96m│");
+		System.out.println("│  \033[96m[\033[97m4\033[96m] " + disponible17 + "17:00  \033[96m│");
+		System.out.println("│  \033[96m[\033[97m5\033[96m] " + disponible18 + "18:00  \033[96m│");
+		System.out.println("│  \033[96m[\033[97m6\033[96m] " + disponible19 + "19:00  \033[96m│");
+		System.out.println("│  \033[96m[\033[97m7\033[96m] " + disponible20 + "20:00  \033[96m│");
+		System.out.println("│  \033[96m[\033[97m8\033[96m] " + disponible21 + "21:00  \033[96m│");
+		System.out.println("│             │");
+		System.out.println("│  \033[96m[\033[97m9\033[96m] \033[97mATRÁS  \033[96m│");
+		System.out.println("└─────────────┘\033[97m");
 	}
 	
 	public static String scGetMonth() {

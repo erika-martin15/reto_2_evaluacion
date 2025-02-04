@@ -161,4 +161,26 @@ public class RepositorioSala {
 		getSalaCount2();
 		getSalaCount3();
 	}
+	
+	public static void checkHour() {
+		
+		String query = "SELECT reserva_inicio, reserva_final, ID_sala FROM reserva WHERE ID_sala = ? AND (Reserva_Inicio <= ? AND Reserva_Final >= ?);";
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 }
