@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import auxiliar.Input;
 import modelos.Usuario;
+import repositorios.RepositorioReserva;
 import repositorios.RepositorioUsuario;
 
 public class LoginMenu {
@@ -14,7 +15,8 @@ public class LoginMenu {
 	public static String globalUsuarioDNI;
 	
 	private static ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
-	//Metodo para mostrar Menu
+	
+	
 	private static void showUI() {
 		
 		System.out.println("""
@@ -27,10 +29,14 @@ public class LoginMenu {
 				└──────────────────────────┘\033[97m""");
 	}
 	
-	//Metodo para mostrar el menu para registrarse/iniciar sesion en el programa
+	
 	public static void loginMenu() {
 		
 		int option = -1;
+		
+		if (RepositorioReserva.goneThroughThis) {
+			option = 3;
+		}
 		
 		while (option != 3) {
 			
@@ -54,8 +60,8 @@ public class LoginMenu {
 				usuarios.get(index).setApellido(Input.scApellido());
 				usuarios.get(index).setSexo(Input.scSexo());				
 				usuarios.get(index).setTelefono(Input.scTelefono());
-				usuarios.get(index).setPassword(Input.scContra());
 				usuarios.get(index).setEmail(Input.scEmail());
+				usuarios.get(index).setPassword(Input.scContra());
 				Usuario usuario = usuarios.get(index);
 				
 				try {
@@ -99,6 +105,7 @@ public class LoginMenu {
 							└──────────────────────────────────────────────────────┘\033[97m""");
 				break;
 			}	
-		}	
+		}
+		RepositorioReserva.goneThroughThis = false;
 	}
 }

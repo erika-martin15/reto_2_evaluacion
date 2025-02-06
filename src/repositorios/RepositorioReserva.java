@@ -11,38 +11,37 @@ import conectores.Conector;
 
 public class RepositorioReserva {
 	
+	public static boolean goneThroughThis;
+	
 	public static void hacerReserva(String fecha_comienzo, String fecha_fin, float preciototal, int id_sala, String dni) {
 		
+		
 		// CONSULTA PARA INSERTAR LA RESERVA
-			String query = "INSERT INTO Reserva (ID, Reserva_Inicio, Reserva_Final, PrecioTotal, ID_Sala, DNI_Usuario) VALUES (default, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO Reserva (ID, Reserva_Inicio, Reserva_Final, PrecioTotal, ID_Sala, DNI_Usuario) VALUES (default, ?, ?, ?, ?, ?)";
 			
-			// CONSULTA PARA COMPROBAR SI LAS HORAS ESTÁN COGIDAS
-			String queryCheck = "SELECT reserva_inicio, reserva_final, ID_sala FROM reserva WHERE ID_sala = ? AND (Reserva_Inicio <= ? AND Reserva_Final >= ?);";
+		// CONSULTA PARA COMPROBAR SI LAS HORAS ESTÁN COGIDAS
+		String queryCheck = "SELECT reserva_inicio, reserva_final, ID_sala FROM reserva WHERE ID_sala = ? AND (? < Reserva_Final AND ? > Reserva_Inicio);";
+		
+		
+		try (PreparedStatement checkStmt = Conector.getConexion().prepareStatement(queryCheck)) {
 			
-			try (PreparedStatement checkStmt = Conector.getConexion().prepareStatement(queryCheck)) {
+			checkStmt.setInt(1, id_sala);
+			checkStmt.setString(2, fecha_comienzo);
+			checkStmt.setString(3, fecha_fin);
+			
+			ResultSet resultSet = checkStmt.executeQuery();
+			
+			if (resultSet.next()) {
 				
-				System.out.println(fecha_comienzo);
-				System.out.println(fecha_fin);
-				System.out.println(id_sala);
-				
-				
-				checkStmt.setInt(1, id_sala);
-				checkStmt.setString(2, fecha_comienzo);
-				checkStmt.setString(3, fecha_fin);
-				
-				ResultSet resultSet = checkStmt.executeQuery();
-				
-				if (resultSet.next()) {
-					
-			        int count = resultSet.getRow();
-			        
-			     // SI DEVUELVE UN RESULTADO, YA EXISTE LA RESERVA
-			        if (count > 0) {
-			        	
-			        	System.out.println("""
-								\033[91m┌──────────────────────────────────────────────┐
-								│ [!] \033[97mLA SALA HA SIDO RESERVADA POSTERIORMENTE \033[91m│
-								└──────────────────────────────────────────────┘\033[97m""");
+		        int count = resultSet.getRow();
+		        
+		     // SI DEVUELVE UN RESULTADO, YA EXISTE LA RESERVA
+		        if (count > 0) {
+		        
+			       	System.out.println("""
+							\033[91m┌──────────────────────────────────────────────┐
+							│ [!] \033[97mLA SALA HA SIDO RESERVADA POSTERIORMENTE \033[91m│
+							└──────────────────────────────────────────────┘\033[97m""");
 			        }
 				}
 				// INSERTA LA RESERVA
@@ -63,13 +62,15 @@ public class RepositorioReserva {
 							
 							opcionReserva = Input.getScanner().nextInt();
 							
+							goneThroughThis = true;
+							
 							switch (opcionReserva) {
 							case 1:
 								preparedStatement.setString(1, fecha_comienzo);
 						        preparedStatement.setString(2, fecha_fin);
-						        preparedStatement.setFloat(3, preciototal); // PRECIO TOTAL
-						        preparedStatement.setInt(4, id_sala); // ID SALA
-						        preparedStatement.setString(5, dni); // DNI USUARIO
+						        preparedStatement.setFloat(3, preciototal);
+						        preparedStatement.setInt(4, id_sala);
+						        preparedStatement.setString(5, dni);
 						        preparedStatement.executeUpdate();
 						        
 						        System.out.println("""
@@ -103,7 +104,4 @@ public class RepositorioReserva {
 				e.printStackTrace();
 			}
 	}
-	
-	
-	
 }

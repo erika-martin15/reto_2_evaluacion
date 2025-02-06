@@ -7,25 +7,48 @@ public class SalaMenu {
 	
 	public static int globalSalaID;
 	
+	private static void showSalaUI1() {
+		System.out.println("""
+				\033[96m┌──────┬──────────────┬───────────┬─────────────────────────────┬─────────────┬──────────────┬────────────┬──────────┬───────┐
+				│ \033[97mSALA \033[96m│    \033[97mNOMBRE    \033[96m│ \033[97mCAPACIDAD \033[96m│          \033[97mDIRECCION          \033[96m│ \033[97mPRECIO-HORA \033[96m│     \033[97mTIPO     \033[96m│ \033[97mIMPRESORAS \033[96m│ \033[97mPUPITRES \033[96m│  \033[97mPCS  \033[96m│
+				├──────┼──────────────┼───────────┼─────────────────────────────┼─────────────┼──────────────┼────────────┼──────────┼───────┤\033[97m""");
+	}
+	
+	private static void showSalaUI2() {
+		System.out.println("""
+				\033[96m└──────┴──────────────┴───────────┴─────────────────────────────┴─────────────┴──────────────┴────────────┴──────────┴───────┘\033[97m""");
+	}
+	
+	
 	private static void showUI1() {
+		
 		RepositorioSala.getEverySalaN();
 		
-		RepositorioSala.showSalaOff1();
+		showSalaUI1(); // PARTE DE ARRIBA DEL UI
+		
+		RepositorioSala.printSalaInfo(1); // INFO DE LA SALA
+		
+		showSalaUI2(); // PARTE DE ABAJO DEL UI
+		
 		System.out.println("\n\033[96m[\033[97m" + (RepositorioSala.nSalas1+1) + "\033[96m] \033[97mATRAS");
 	}
 	
 	private static void showUI2() {
 		RepositorioSala.getEverySalaN();
+		showSalaUI1();
 		
-		RepositorioSala.showSalaOff2();
+		RepositorioSala.printSalaInfo(2);
+		showSalaUI2();
 		System.out.println("\n\033[96m[\033[97m" + (RepositorioSala.nSalas2+1) + "\033[96m] \033[97mATRAS");
 		
 	}
 	
 	private static void showUI3() {
 		RepositorioSala.getEverySalaN();
+		showSalaUI1();
 		
-		RepositorioSala.showSalaOff3();
+		RepositorioSala.printSalaInfo(3);
+		showSalaUI2();
 		System.out.println("\n\033[96m[\033[97m" + (RepositorioSala.nSalas3+1) + "\033[96m] \033[97mATRAS");
 	}
 	

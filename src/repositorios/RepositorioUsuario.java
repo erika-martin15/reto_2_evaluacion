@@ -1,18 +1,13 @@
 package repositorios;
 
 import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import View.AdminMenu;
 import View.OficinaMenu;
-import auxiliar.Input;
 import conectores.Conector;
-import modelos.Aula;
-import modelos.Ordenadores;
-import modelos.Reuniones;
-import modelos.Sala;
 import modelos.Usuario;
 
 public class RepositorioUsuario {

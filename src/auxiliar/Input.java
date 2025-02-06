@@ -1,9 +1,14 @@
 package auxiliar;
 
 import java.io.Console;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+
+import java.net.*;
+
+import repositorios.RepositorioSala;
 
 public class Input {
 	
@@ -45,10 +50,13 @@ public class Input {
 			
 			DNI = sc.nextLine();
 			
+			// COMPRUEBA LA LONGITUD DEL DNI
 			if (DNI.length() == 9) {
+				// COMPRUEBA QUE LO QUE HAYA EN LOS 8 PRIMEROS CARACTERES SEAN NUMEROS
 				if (base10.contains(String.valueOf(DNI.charAt(0))) && base10.contains(String.valueOf(DNI.charAt(1))) && base10.contains(String.valueOf(DNI.charAt(2))) &&
 					base10.contains(String.valueOf(DNI.charAt(3))) && base10.contains(String.valueOf(DNI.charAt(4))) && base10.contains(String.valueOf(DNI.charAt(5))) &&
 					base10.contains(String.valueOf(DNI.charAt(6))) && base10.contains(String.valueOf(DNI.charAt(7)))) {
+					// COMPRUEBA QUE LO QUE HAYA EN EL CARACTER 9 SEA UNA LETRA
 					if (alph.contains(String.valueOf(DNI.charAt(8)))) {
 						correct = true;
 					}
@@ -127,9 +135,81 @@ public class Input {
 		return sexo;
 	}
 	
+	
 	public static String scEmail() {
-		System.out.println("Inserte el correo electrónico: ");
-		return sc.nextLine();
+		
+		boolean correct = false;
+		
+		String email = "";
+		
+		while (!correct) {
+			
+			int nArrobas = 0;
+			
+			System.out.println("Inserte el correo electrónico: ");	
+			
+			email = sc.nextLine();
+			
+			// SI EL CORREO CONTIENE ARROBA @ SIGUE
+			if (email.contains("@")) {
+				
+				// YA QUE CONTIENE ARROBA @, CUENTA CUANTOS ARROBAS @ TIENE EL CORREO
+				for (int i = 0; i < email.length(); i++) {
+					if (email.charAt(i) == '@') {
+						nArrobas++;
+					}
+				}
+				
+				// SI EL CORREO TIENE 1 ARROBA @ SIGUE
+				if (nArrobas == 1) {
+					
+					// DIVIDE EL CORREO EN BASE AL ARROBA @
+					String [] arrayEmail = email.split("@");
+					
+					// SI LA DIVISIÓN TIENE 2 TROZOS SIGUE
+					if (arrayEmail.length == 2) {
+						
+						// COMPRUEBA QUE EL DOMINIO DEL CORREO ES CORRECTO
+						try {
+							InetAddress inetAddress = InetAddress.getByName(arrayEmail[1]);
+							
+							//System.out.println("Dominio correcto");
+							correct = true;
+						}
+						catch (UnknownHostException e) {
+							System.out.println("""
+									\033[91m┌────────────────────────────────────────┐
+									│ [!] \033[97mEL DOMINIO DEL CORREO NO ES VÁLIDO \033[91m│
+									└────────────────────────────────────────┘\033[97m""");
+						}
+						
+					}
+					// SI EL CORREO SOLO TIENE UNA PARTE: ESTÁ MAL
+					else if (arrayEmail.length == 1) {
+						System.out.println("""
+								\033[91m┌────────────────────────────────────────┐
+								│ [!] \033[97mEL FORMATO DEL CORREO NO ES VÁLIDO \033[91m│
+								└────────────────────────────────────────┘\033[97m""");
+					}
+				}
+				// SI EL CORREO TIENE MÁS DE 1 ARROBA @: ESTÁ MAL
+				else if (nArrobas > 1) {
+					System.out.println("""
+							\033[91m┌─────────────────────────────────────────────────┐
+							│ [!] \033[97mEL CORREO NO PUEDE LLEVAR MÁS DE 1 ARROBA @ \033[91m│
+							└─────────────────────────────────────────────────┘\033[97m""");
+				}
+			}
+			// SI EL CORREO NO TIENE ARROBA @: ESTÁ MAL
+			else {
+				System.out.println("""
+						\033[91m┌────────────────────────────────────┐
+						│ [!] \033[97mEL CORREO NO CONTIENE ARROBA @ \033[91m│
+						└────────────────────────────────────┘\033[97m""");
+			}
+		}
+		
+		return email;
 	}
 	
 	public static int scTelefono() {
@@ -145,8 +225,9 @@ public class Input {
 			
 			telf = sc.nextLine();
 			
+			// COMPRUEBA QUE EL TELEFONO TENGA 9 CARACTERES
 			if (telf.length() == 9) {
-				
+				// COMPRUEBA QUE EL TELEFONO CONTENGA NUMEROS Y NO LETRAS, PASANDO POR CADA CARACTER DEL STRING DEL TELEFONO
 				for (int i = 0; i < 9; i++) {
 					if (base10.contains(String.valueOf(telf.charAt(i))) && !alph.contains(String.valueOf(telf.charAt(i)))) {
 						counter++;
@@ -173,10 +254,31 @@ public class Input {
 	}
 	
 	public static String scContra() {
+		
 		Console console = System.console();
 		
-		System.out.println("Inserte la contraseña: ");;
-		char[] passwordArray = console.readPassword();
+		char[] passwordArray = null;
+		
+		boolean correct = false;
+		
+		while (!correct) {
+			
+			System.out.println("Inserte la contraseña: ");
+			
+			passwordArray = console.readPassword();
+			
+			if (passwordArray.length >= 8) {
+				
+				correct = true;
+				
+			}
+			else {
+				System.out.println("""
+						\033[91m┌─────────────────────┐
+						│ [!] \033[97mDEMASIADO CORTA \033[91m│
+						└─────────────────────┘\033[97m""");
+			}
+		}
 		
 		return new String(passwordArray);
 	}
@@ -192,35 +294,27 @@ public class Input {
 	
 	public static void showHoras() {
 		
-		final String DISPONIBLE = "\033[97m";
-		final String OCUPADO = "\033[31m";
-		
-		String disponible14 = DISPONIBLE;
-		String disponible15 = DISPONIBLE;
-		String disponible16 = DISPONIBLE;
-		String disponible17 = DISPONIBLE;
-		String disponible18 = DISPONIBLE;
-		String disponible19 = DISPONIBLE;
-		String disponible20 = DISPONIBLE;
-		String disponible21 = DISPONIBLE;
-				
+		// SI LA HORA ESTA RESERVADA SE MOSTRARÁ EN ROJO, SI ESTÁ DISPONIBLE SE MOSTRARÁ EN BLANCO
 		System.out.println("\033[96m┌─────────────┐");
-		System.out.println("│    \033[97mHORAS    \033[96m│");
-		System.out.println("│             │");
-		System.out.println("│  \033[96m[\033[97m1\033[96m] " + disponible14 + "14:00  \033[96m│");
-		System.out.println("│  \033[96m[\033[97m2\033[96m] " + disponible15 + "15:00  \033[96m│");
-		System.out.println("│  \033[96m[\033[97m3\033[96m] " + disponible16 + "16:00  \033[96m│");
-		System.out.println("│  \033[96m[\033[97m4\033[96m] " + disponible17 + "17:00  \033[96m│");
-		System.out.println("│  \033[96m[\033[97m5\033[96m] " + disponible18 + "18:00  \033[96m│");
-		System.out.println("│  \033[96m[\033[97m6\033[96m] " + disponible19 + "19:00  \033[96m│");
-		System.out.println("│  \033[96m[\033[97m7\033[96m] " + disponible20 + "20:00  \033[96m│");
-		System.out.println("│  \033[96m[\033[97m8\033[96m] " + disponible21 + "21:00  \033[96m│");
+		System.out.println("│    \033[97mHORAS  \033[96m┌─┴──────────────────────────────────┐");
+		System.out.println("│           │ \033[97mLas horas en \033[91mrojo \033[97mestán reservadas \033[96m│");
+		System.out.println("│  [" + RepositorioSala.disponible14 + "1\033[96m] " + RepositorioSala.disponible14 + "14:00\033[96m└─┬──────────────────────────────────┘");
+		System.out.println("│  [" + RepositorioSala.disponible15 + "2\033[96m] " + RepositorioSala.disponible15 + "15:00  \033[96m│");
+		System.out.println("│  [" + RepositorioSala.disponible16 + "3\033[96m] " + RepositorioSala.disponible16 + "16:00  \033[96m│");
+		System.out.println("│  [" + RepositorioSala.disponible17 + "4\033[96m] " + RepositorioSala.disponible17 + "17:00  \033[96m│");
+		System.out.println("│  [" + RepositorioSala.disponible18 + "5\033[96m] " + RepositorioSala.disponible18 + "18:00  \033[96m│");
+		System.out.println("│  [" + RepositorioSala.disponible19 + "6\033[96m] " + RepositorioSala.disponible19 + "19:00  \033[96m│");
+		System.out.println("│  [" + RepositorioSala.disponible20 + "7\033[96m] " + RepositorioSala.disponible20 + "20:00  \033[96m│");
+		System.out.println("│  [" + RepositorioSala.disponible21 + "8\033[96m] " + RepositorioSala.disponible21 + "21:00  \033[96m│");
 		System.out.println("│             │");
 		System.out.println("│  \033[96m[\033[97m9\033[96m] \033[97mATRÁS  \033[96m│");
 		System.out.println("└─────────────┘\033[97m");
 	}
 	
 	public static String scGetMonth() {
+		
+		// BUFFER
+		sc.nextLine();
 		
 		String mes = "";
 		
@@ -240,8 +334,6 @@ public class Input {
 					│   \033[97m1   \033[96m│    \033[97m2    \033[96m│   \033[97m3   \033[96m│   \033[97m4   \033[96m│  \033[97m5   \033[96m│   \033[97m6   \033[96m│   \033[97m7   \033[96m│   \033[97m8    \033[96m│     \033[97m9      \033[96m│   \033[97m10    \033[96m│    \033[97m11     \033[96m│    \033[97m12     \033[96m│
 					└───────┴─────────┴───────┴───────┴──────┴───────┴───────┴────────┴────────────┴─────────┴───────────┴───────────┘\033[97m""");
 			
-			
-			sc.nextLine();
 			mes = sc.nextLine();
 			
 			mesNumber = Integer.parseInt(mes);
@@ -313,6 +405,7 @@ public class Input {
 			globalMesName = "Diciembre";
 			break;
 		default:
+			Input.outOfRangeMSG();;
 			break;
 		}
 		
@@ -335,6 +428,7 @@ public class Input {
 			
 			dia = sc.nextInt();
 			
+			// COMPRUEBA QUÉ MES SE HA INTRODUCIDO PARA QUE NO SE PASE DE DIAS
 			switch (mesNumber) {
 			case 1: // ENERO
 				if (dia > 0 && dia < 32) {
@@ -446,10 +540,12 @@ public class Input {
 		int option = 0;
 		
 		String hourConverted = "";
-			
+		
 		while (option <= 0 || option >= 10) {
 				
 			System.out.println("\033[97mIntroduzca la hora: ");
+			
+			RepositorioSala.checkHour();
 			
 			Input.showHoras();
 			
@@ -518,6 +614,7 @@ public class Input {
 			
 			nHoras = sc.nextInt();
 			
+			// CADA HORA TIENE UN BOUNDARY PARA QUE NO SE PASE DEL LIMITE
 			switch (horaStart1) {
 			case 14:
 				

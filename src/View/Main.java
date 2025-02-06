@@ -1,13 +1,9 @@
 package View;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import conectores.Conector;
-import modelos.Oficina;
-import repositorios.RepositorioOficina;
 import repositorios.RepositorioSala;
-import repositorios.RepositorioUsuario;
 
 public class Main {
 
@@ -16,7 +12,11 @@ public class Main {
 		System.out.print("\033[97m");
 		
 		LoginMenu login = new LoginMenu();
+		
+		// SE CONECTA A LA BASE DE DATOS
 		Conector.conectar();
+		
+		// CREA OBJETOS SALA Y LOS RELLENA CON INFORMACIÓN A PARTIR DE LAS SALAS QUE HAY EN LA BASE DE DATOS
 		RepositorioSala.instanciarSalas();
 		
 		System.out.println("""
@@ -29,6 +29,8 @@ public class Main {
 		login.loginMenu();
 		
 		try {
+			
+			// CIERRA LA CONEXIÓN CON LAS BASE DE DATOS
 			Conector.cerrarConexion();
 		} catch (SQLException e) {
 			e.printStackTrace();

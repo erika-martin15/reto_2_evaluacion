@@ -10,7 +10,8 @@ public class Conector {
 	private final static String database = "jdbc:mysql://10.10.13.144:3306/CollabCity";
 	private final static String user = "UsuarioApp";
 	private final static String password = "k9Z#q8L!wB2*7r";
-	// Crear el metodo conectar para comprobar que los datos estan establecidos correctamente
+	
+	
 	public static void conectar(){
 		
 		try{

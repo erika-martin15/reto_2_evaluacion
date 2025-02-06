@@ -30,12 +30,11 @@ public class DiaHoraMenu {
 		
 		DiaHoraMenu.mes = Input.scGetMonth();
 		
+		// EN BASE AL MES HACE SCAN DEL DIA
 		DiaHoraMenu.dia = Input.scGetDia(mes);
 		
 		// BUFFER
 		Input.getScanner().nextLine();
-		
-		boolean correct = false;
 		
 		DiaHoraMenu.horaStart = Input.scGetStartHour();
 		
@@ -45,6 +44,9 @@ public class DiaHoraMenu {
 		else {
 			DiaHoraMenu.horaEnd = Input.scGetEndHour(DiaHoraMenu.horaStart);
 			
+			// LA CANTIDAD DE HORAS SERÁ LA HORA DE SALIDA - LA HORA DE ENTRADA
+			//
+			//					[PILLA EL INT DEL STRING]		[DE LOS PRIMEROS 2 NUMEROS]
 			DiaHoraMenu.salaMultiplier = Integer.parseInt(DiaHoraMenu.horaEnd.substring(0, 2)) - Integer.parseInt(DiaHoraMenu.horaStart.substring(0, 2));
 			
 			for (int i = 0; i < RepositorioSala.arrayListSalas.size(); i++) {

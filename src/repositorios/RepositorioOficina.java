@@ -10,6 +10,8 @@ import modelos.Oficina;
 
 public class RepositorioOficina {
 	
+	
+	// [!] NO USADO
 	public static void instanciarOficinas() {
 		
 		String queryCheck = "SELECT ID, Ciudad, Nombre, Direccion FROM Oficina";
@@ -31,15 +33,13 @@ public class RepositorioOficina {
 				oficinas.add(new Oficina(ID, ciudad, nombre, direccion));
 				}
 			
+			// DEBUG
 			/*for (int i = 0; i < oficinas.size(); i++) {
 				System.out.println(oficinas.get(i).toString());
 			}*/
 			
-			
-			
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-	
 	}
 }
