@@ -171,7 +171,7 @@ public class Input {
 						
 						// COMPRUEBA QUE EL DOMINIO DEL CORREO ES CORRECTO
 						try {
-							InetAddress inetAddress = InetAddress.getByName(arrayEmail[1]);
+							InetAddress.getByName(arrayEmail[1]);
 							
 							//System.out.println("Dominio correcto");
 							correct = true;

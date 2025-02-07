@@ -15,7 +15,7 @@ public class RepositorioUsuario {
 	public static void registrarUsuario(Usuario usuario) throws SQLException {
 		
 		// CONSULTA PARA INSERTAR EL USUARIO
-		String query = "INSERT INTO Usuario (DNI, Nombre, Apellido, Sexo, Telefono, Contra, Email, Rol) VALUES (?, ?, ?, ?, ?, ?, ?, 'CLIENTE')";
+		String query = "INSERT INTO Usuario (DNI, Nombre, Apellido, Sexo, Telefono, Contra, Email, Rol) VALUES (?, ?, ?, ?, ?, sha2(?, 256), ?, 'CLIENTE')";
 		
 		// CONSULTA PARA COMPROBAR SI EL USUARIO YA EXISTE
 		String queryCheck = "SELECT DNI FROM Usuario WHERE DNI = ? ";
@@ -67,7 +67,7 @@ public class RepositorioUsuario {
 		
 		boolean exist = false;
 		
-		String checkPassword = "SELECT DNI, Contra, Rol FROM Usuario WHERE DNI = ? AND Contra = ?";
+		String checkPassword = "SELECT DNI, Contra, Rol FROM Usuario WHERE DNI = ? AND Contra = sha2(?, 256)";
 		
 		String checkDNI = "SELECT DNI FROM Usuario WHERE DNI = ?";
 		
