@@ -14,6 +14,7 @@ public class Input {
 	
 	private static Scanner sc = new Scanner(System.in);
 	
+	// ATRIBUTO PÚBLICO DE CLASE
 	public static String globalMesName;
 	
 	public static Scanner getScanner() {

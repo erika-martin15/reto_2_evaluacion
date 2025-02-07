@@ -14,7 +14,6 @@ public class Usuario {
 	
 	public static final String permiso_debil = "CLIENTE";
 	public static final String permiso_fuerte = "ADMIN";
-	public static final String permiso_rey = "REY_ADMIN";
 	
 	// CONSTRUCTOR
 	public Usuario() {

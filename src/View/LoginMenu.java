@@ -55,7 +55,7 @@ public class LoginMenu {
 				
 				Input.getScanner().nextLine();
 				usuarios.get(index).setDNI(Input.scDNI());
-				usuarios.get(index).setRol("CLIENTE");
+				usuarios.get(index).setRol(Usuario.permiso_debil);
 				usuarios.get(index).setNombre(Input.scNombre());
 				usuarios.get(index).setApellido(Input.scApellido());
 				usuarios.get(index).setSexo(Input.scSexo());				
