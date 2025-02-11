@@ -1,5 +1,7 @@
 package modelos;
 
+import java.util.Objects;
+
 public class Usuario {
 	
 	// ATRIBUTOS
@@ -85,5 +87,20 @@ public class Usuario {
 	public String toString() {
 		return "DNI = " + DNI + ", Rol = " + rol + ", Nombre = " + nombre + ", Apellido = " + apellido + ", Sexo = "
 				+ sexo + ", Email = " + email + ", Telefono = " + telefono + ", Contraseña = " + contra;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		return Objects.equals(DNI, other.DNI) && Objects.equals(apellido, other.apellido)
+				&& Objects.equals(contra, other.contra) && Objects.equals(email, other.email)
+				&& Objects.equals(nombre, other.nombre) && Objects.equals(rol, other.rol)
+				&& Objects.equals(sexo, other.sexo) && telefono == other.telefono;
 	}
 }

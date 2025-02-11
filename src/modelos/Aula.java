@@ -27,4 +27,16 @@ public class Aula extends Sala{
 	public String toString() {
 		return super.toString() + ", Pupitres = " + pupitres;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Aula other = (Aula) obj;
+		return pupitres == other.pupitres;
+	}
 }

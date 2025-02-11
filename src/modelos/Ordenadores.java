@@ -27,4 +27,16 @@ public class Ordenadores extends Sala {
 	public String toString() {
 		return super.toString() + ", PCs = " + PCs;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Ordenadores other = (Ordenadores) obj;
+		return PCs == other.PCs;
+	}
 }

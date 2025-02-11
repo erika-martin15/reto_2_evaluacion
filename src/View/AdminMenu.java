@@ -14,7 +14,7 @@ public class AdminMenu {
 				║ [\033[97m2\033[95m]  \033[97mCANTIDAD TOTAL DE RESERVAS           \033[95m║
 				║ [\033[97m3\033[95m]  \033[97mCANTIDAD TOTAL DE CLIENTES           \033[95m║
 				║ [\033[97m4\033[95m]  \033[97mDINERO TOTAL INGRESADO               \033[95m║
-				║ [\033[97m5\033[95m]  \033[97mATRAS                                \033[95m║
+				║ [\033[97m5\033[95m]  \033[97mLOG OUT                              \033[95m║
 				╚═══════════════════════════════════════════╝\033[97m""");
 	}
 	
@@ -67,10 +67,7 @@ public class AdminMenu {
 						║ [!] \033[97mOpción no válida, vuelva a introducir una opción \033[91m║
 						╚══════════════════════════════════════════════════════╝\033[97m""");
 				break;
-			
 			}
-			
 		}
-		
 	}
 }

@@ -1,5 +1,7 @@
 package modelos;
 
+import java.util.Objects;
+
 public class Sala {
 	
 	// ATRIBUTOS
@@ -73,5 +75,20 @@ public class Sala {
 	@Override
 	public String toString() {
 		return "Nombre = " + nombre + ", Capacidad = " + capacidad + ", Direccion = "  + direccion + ", Precio Hora = " + precioHora + ", Tipo = " + tipo;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Sala other = (Sala) obj;
+		return ID == other.ID && ID_oficina == other.ID_oficina && capacidad == other.capacidad
+				&& Objects.equals(direccion, other.direccion) && Objects.equals(nombre, other.nombre)
+				&& Float.floatToIntBits(precioHora) == Float.floatToIntBits(other.precioHora)
+				&& Objects.equals(tipo, other.tipo);
 	}
 }

@@ -1,6 +1,7 @@
 package modelos;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Oficina {
 	
@@ -54,5 +55,18 @@ public class Oficina {
 	@Override
 	public String toString() {
 		return "OFICINA " + ID + ", Ciudad = " + ciudad + ", nombre = " + nombre + ", Direccion = " + direccion;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Oficina other = (Oficina) obj;
+		return ID == other.ID && Objects.equals(ciudad, other.ciudad) && Objects.equals(direccion, other.direccion)
+				&& Objects.equals(nombre, other.nombre) && Objects.equals(salas, other.salas);
 	}
 }

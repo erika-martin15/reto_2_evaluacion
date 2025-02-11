@@ -27,4 +27,16 @@ public class Reuniones extends Sala{
 	public String toString() {
 		return super.toString() + ", Impresoras = " + Impresoras;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Reuniones other = (Reuniones) obj;
+		return Impresoras == other.Impresoras;
+	}
 }

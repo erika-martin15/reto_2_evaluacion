@@ -1,5 +1,7 @@
 package modelos;
 
+import java.util.Objects;
+
 public class Reserva {
 	
 	// ATRIBUTOS
@@ -66,5 +68,19 @@ public class Reserva {
 	public String toString() {
 		return "ID = " + ID + ", Fecha Inicio =" + fecha_inicio + ", Fecha Fin =" + fecha_fin + ", Precio Total ="
 				+ precioTotal + ", DNI Usuario =" + DNI_usuario + ", ID Sala = " + ID_sala;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Reserva other = (Reserva) obj;
+		return Objects.equals(DNI_usuario, other.DNI_usuario) && ID == other.ID && ID_sala == other.ID_sala
+				&& Objects.equals(fecha_fin, other.fecha_fin) && Objects.equals(fecha_inicio, other.fecha_inicio)
+				&& Float.floatToIntBits(precioTotal) == Float.floatToIntBits(other.precioTotal);
 	}
 }
